@@ -1,0 +1,8 @@
+{
+  "model": "o3",
+  "customInstructions": "Use TypeScript strict mode throughout. Prefer functional style — no classes. Use `fs-extra` for all file system operations. Keep functions pure where possible and isolate I/O at the edges. Use `bun:test` for all tests with real temp directories.",
+  "tools": {
+    "shell": true,
+    "fileSystem": true
+  }
+}

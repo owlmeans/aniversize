@@ -1,0 +1,5 @@
+{
+  "model": "o3",
+  "customInstructions": "Use TypeScript strict mode.",
+  "tools": { "shell": true }
+}
