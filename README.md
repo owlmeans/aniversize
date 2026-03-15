@@ -2,7 +2,7 @@
 
 > One universal format for AI coding agent instructions. Write once, sync everywhere.
 
-`@owlmeans/aniversize` lets you maintain a single source of truth for your AI coding agent configuration and synchronise it to whichever agent tool your team uses — GitHub Copilot, Claude Code, Codex, or Antigravity.
+`aniversize` lets you maintain a single source of truth for your AI coding agent configuration and synchronise it to whichever agent tool your team uses — GitHub Copilot, Claude Code, Codex, or Antigravity.
 
 ## Why
 
@@ -21,11 +21,11 @@ Every AI coding agent has its own configuration format:
 
 ```sh
 # Global
-npm install -g @owlmeans/aniversize
+npm install -g aniversize
 
 # One-off
-npx @owlmeans/aniversize <command>
-bunx @owlmeans/aniversize <command>
+npx aniversize <command>
+bunx aniversize <command>
 ```
 
 ## Commands

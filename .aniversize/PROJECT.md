@@ -1,11 +1,11 @@
-# @owlmeans/aniversize — Copilot Instructions
+# aniversize — Copilot Instructions
 
 ## What This Project Is
 
-`@owlmeans/aniversize` is a TypeScript CLI tool published to npm under the `@owlmeans` scope. It is designed to be used as:
+`aniversize` is a TypeScript CLI tool published to npm under the `@owlmeans` scope. It is designed to be used as:
 
-- A globally installed command: `npm install -g @owlmeans/aniversize` → `aniversize`
-- A one-off executable: `npx @owlmeans/aniversize`, `bunx @owlmeans/aniversize`, `yarn dlx @owlmeans/aniversize`
+- A globally installed command: `npm install -g aniversize` → `aniversize`
+- A one-off executable: `npx aniversize`, `bunx aniversize`, `yarn dlx aniversize`
 
 The primary purpose is **unifying AI coding agent configuration across a project**. It lets teams write agent instructions once in a universal format (stored in `.aniversize/`) and then convert them into the format required by any specific agent (GitHub Copilot, Claude, Cursor, etc.). This avoids duplicating and hand-maintaining separate instruction files for each tool.
 

@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "@owlmeans/aniversize",
+      "name": "aniversize",
       "dependencies": {
         "commander": "^14.0.3",
         "enquirer": "^2.4.1",

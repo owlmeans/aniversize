@@ -1,5 +1,5 @@
 {
-  "name": "@owlmeans/aniversize",
+  "name": "aniversize",
   "version": "0.0.1",
   "description": "CLI tool for anniversary management and reminders",
   "type": "module",
