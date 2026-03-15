@@ -1,5 +1,5 @@
 export type { AgentName, UnifyOptions, SourceFile, UnifyResult, ParsedFrontmatter } from './types.js'
-export { AGENT_FRONTMATTER_KEY, AGENT_RULE_VALUE, MANAGED_GLOBS, PROTECTED_FILES } from './consts.js'
+export { AGENT_FRONTMATTER_KEY, AGENT_RULE_VALUE, CROSS_AGENT_TYPE, MANAGED_GLOBS, PROTECTED_FILES } from './consts.js'
 export {
   parseFrontmatter,
   serializeFrontmatter,

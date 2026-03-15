@@ -87,6 +87,82 @@ With `--dry` the output uses `would write` / `would delete` and no files are tou
 
 If no agent is specified and no `meta.json` exists, `unify` runs `identify` automatically.
 
+### `update [agent]`
+
+Read the `.aniversize/` universal format and write the appropriate configuration files for the primary agent. This is the reverse of `unify`.
+
+```sh
+# Auto-detect agent from .aniversize.json / meta.json (or run identify first)
+aniversize update
+
+# Explicit agent
+aniversize update copilot
+aniversize update claude
+
+# Preview without writing anything
+aniversize update --dry
+```
+
+Example output:
+
+```sh
+Updating GitHub Copilot configuration from .aniversize format…
+
+  wrote   .github/copilot-instructions.md
+  wrote   .github/instructions/typescript.instructions.md
+  wrote   AGENTS.md
+
+Done. 3 file(s) written, 0 file(s) skipped.
+```
+
+With `--dry` the output uses `would write` and no files are touched.
+
+If no agent is specified and no `.aniversize.json` / `meta.json` exists, `update` runs `identify` automatically.
+
+Mappings from `.aniversize/` to agent files:
+
+| Source | Copilot | Claude | Codex | Antigravity |
+|---|---|---|---|---|
+| `PROJECT.md` | `.github/copilot-instructions.md` | `CLAUDE.md` | `codex.json` (`customInstructions`) | `ANTIGRAVITY.md` |
+| `MEMORY.md` | — | `CLAUDE.local.md` | — | — |
+| `AGENTS.md` | `AGENTS.md` | `AGENTS.md` | `AGENTS.md` | `AGENTS.md` |
+| `rules/*.md` | `.github/instructions/*.instructions.md` | `.claude/commands/*.md` | `.codex/*.md` | `.antigravity/*.md` |
+| `skills/*/SKILL.md` | `.github/instructions/*.instructions.md` | `.claude/commands/*.md` | `.codex/*.md` | `.antigravity/*.md` |
+
+Rules without frontmatter are universal and written for every agent.
+
+### `setup [agent]`
+
+Set the primary agent in `.aniversize.json` and write its configuration files from `.aniversize/`. Equivalent to running `switch` followed by `update` in one step.
+
+```sh
+# Use agent from .aniversize.json, or prompt if not set
+aniversize setup
+
+# Explicit agent
+aniversize setup copilot
+aniversize setup claude
+
+# Preview without writing anything
+aniversize setup --dry
+```
+
+Example output:
+
+```sh
+Setting up GitHub Copilot configuration…
+
+  wrote   .aniversize.json
+  wrote   .github/copilot-instructions.md
+  wrote   AGENTS.md
+
+Done. 3 file(s) written, 0 file(s) skipped.
+```
+
+With `--dry` the output uses `would write` and no files are touched.
+
+If no agent is specified and `.aniversize.json` has no `primary`, an interactive prompt asks you to pick one.
+
 ## The `.aniversize` Format
 
 ```

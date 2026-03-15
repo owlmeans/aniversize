@@ -1,7 +1,7 @@
 ---
+copilot: instruction
 applyTo: "src/**"
 ---
-
 # Keeping Tests Current
 
 When you **add a new command** or **modify an existing command** (in `src/cli.ts` or any `action.ts` / `model.ts`), you MUST also add or update the corresponding test files.

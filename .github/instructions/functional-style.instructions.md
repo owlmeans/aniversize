@@ -1,7 +1,7 @@
 ---
+copilot: instruction
 applyTo: "src/**"
 ---
-
 # Functional Code Style
 
 This project uses a **functions-only** code style. Do not use classes.

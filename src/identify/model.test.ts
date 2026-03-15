@@ -230,32 +230,32 @@ describe('identify', () => {
 describe('writeIdentifyMeta', () => {
   test('writes meta.json with primary agent', () =>
     withFixture('empty', async (root) => {
-      const { path: metaPath } = await writeIdentifyMeta(root, 'copilot')
-      const content = JSON.parse(await readFile(metaPath, 'utf-8'))
+      const { meta } = await writeIdentifyMeta(root, 'copilot')
+      const content = JSON.parse(await readFile(meta.path, 'utf-8'))
       expect(content).toEqual({ primary: 'copilot' })
     })
   )
 
   test('creates .aniversize directory automatically', () =>
     withFixture('empty', async (root) => {
-      const { path: metaPath } = await writeIdentifyMeta(root, 'claude')
+      const { meta } = await writeIdentifyMeta(root, 'claude')
       expect(await pathExists(path.join(root, '.aniversize'))).toBe(true)
-      expect(await pathExists(metaPath)).toBe(true)
+      expect(await pathExists(meta.path)).toBe(true)
     })
   )
 
   test('returns correct path to meta.json', () =>
     withFixture('empty', async (root) => {
-      const { path: metaPath } = await writeIdentifyMeta(root, 'codex')
-      expect(metaPath).toBe(path.join(root, '.aniversize', 'meta.json'))
+      const { meta } = await writeIdentifyMeta(root, 'codex')
+      expect(meta.path).toBe(path.join(root, '.aniversize', 'meta.json'))
     })
   )
 
   test('overwrites existing meta.json', () =>
     withFixture('empty', async (root) => {
       await writeIdentifyMeta(root, 'claude', { yes: true })
-      const { path: metaPath } = await writeIdentifyMeta(root, 'copilot', { yes: true })
-      const content = JSON.parse(await readFile(metaPath, 'utf-8'))
+      const { meta } = await writeIdentifyMeta(root, 'copilot', { yes: true })
+      const content = JSON.parse(await readFile(meta.path, 'utf-8'))
       expect(content).toEqual({ primary: 'copilot' })
     })
   )

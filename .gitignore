@@ -35,5 +35,4 @@ Thumbs.db
 .idea/
 *.swp
 *.swo
-
-.aniversize
+.aniversize.json

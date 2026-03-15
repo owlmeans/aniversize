@@ -3,6 +3,9 @@ import { version } from '../package.json' with { type: 'json' }
 import { run } from './index.js'
 import { identifyAction } from './identify/action.js'
 import { unifyAction } from './unify/action.js'
+import { switchAction } from './switch/action.js'
+import { updateAction } from './update/action.js'
+import { setupAction } from './setup/action.js'
 import type { GlobalOpts } from './types.js'
 
 const program = new Command()
@@ -27,6 +30,27 @@ program
   .description('Sync agent configuration files into universal .aniversize format')
   .action((agent: string | undefined, _opts, cmd) => {
     unifyAction(agent, cmd.optsWithGlobals() as GlobalOpts)
+  })
+
+program
+  .command('switch [agent]', { isDefault: true })
+  .description('Change the primary agent locked in .aniversize.json')
+  .action((agent: string | undefined, _opts, cmd) => {
+    switchAction(agent, cmd.optsWithGlobals() as GlobalOpts)
+  })
+
+program
+  .command('update [agent]')
+  .description('Update agent configuration files from .aniversize universal format')
+  .action((agent: string | undefined, _opts, cmd) => {
+    updateAction(agent, cmd.optsWithGlobals() as GlobalOpts)
+  })
+
+program
+  .command('setup [agent]')
+  .description('Set primary agent in .aniversize.json then update agent configuration files')
+  .action((agent: string | undefined, _opts, cmd) => {
+    setupAction(agent, cmd.optsWithGlobals() as GlobalOpts)
   })
 
 program

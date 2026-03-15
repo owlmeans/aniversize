@@ -1,7 +1,7 @@
 ---
+copilot: instruction
 applyTo: "src/**"
 ---
-
 # Keeping README Current
 
 When you **add a new command** or **modify an existing command** (in `src/cli.ts` or any `action.ts`), you MUST also update `README.md`.

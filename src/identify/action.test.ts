@@ -153,11 +153,10 @@ describe('identifyAction (path resolution)', () => {
 
   test('uses process.cwd() when no argument is provided', async () => {
     // This test runs against the real project root — just verify it doesn't throw
-    // and uses the actual cwd in the header.
+    // and uses the actual cwd in the header. dry:true avoids prompts on existing files.
     const { logs } = captureConsole()
-    await identifyAction()
-    expect(logs[0]).toContain('Scanning')
-    expect(logs[0]).toContain(process.cwd())
+    await identifyAction({ dry: true })
+    expect(logs.some(l => l.includes('Scanning') && l.includes(process.cwd()))).toBe(true)
   })
 })
 

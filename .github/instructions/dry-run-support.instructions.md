@@ -1,7 +1,7 @@
 ---
+copilot: instruction
 applyTo: "src/**"
 ---
-
 # Dry-Run Support and Interactive Confirmation — Every Command That Mutates Files
 
 All CLI commands and any model/logic function that **creates, updates, or

@@ -1,9 +1,8 @@
-import path from 'path'
-import { pathExists } from 'fs-extra'
-import { identify, writeIdentifyMeta } from '../identify/model.js'
-import { AGENT_LABELS, AGENT_NAMES, META_PATH } from '../common/consts.js'
-import { isAgentName, readMeta } from '../common/model.js'
+import { identify } from '../identify/model.js'
+import { AGENT_LABELS, AGENT_NAMES } from '../common/consts.js'
+import { isAgentName } from '../common/model.js'
 import { resolveProjectRoot } from '../common/file-util.js'
+import { readMetaWithMark } from '../mark/model.js'
 import { unify } from './model.js'
 import type { AgentName } from './types.js'
 import type { GlobalOpts } from '../types.js'
@@ -21,21 +20,17 @@ export async function unifyAction(agentArg?: string, opts: GlobalOpts = {}): Pro
     }
     agent = agentArg
   } else {
-    if (await pathExists(path.join(projectRoot, META_PATH))) {
-      const meta = await readMeta(projectRoot)
-      if (meta === null) {
-        console.error('Error: .aniversize/meta.json contains invalid JSON.')
-        process.exit(1)
-      }
+    const meta = await readMetaWithMark(projectRoot)
+    if (meta !== null) {
       if (!isAgentName(meta.primary)) {
-        console.error('Error: .aniversize/meta.json has no valid primary agent. Run `aniversize identify` first.')
+        console.error('Error: .aniversize configuration has no valid primary agent. Run `aniversize identify` first.')
         process.exit(1)
       }
       agent = meta.primary
-      console.log(`Using primary agent from .aniversize/meta.json: ${AGENT_LABELS[agent]}\n`)
+      console.log(`Using primary agent from .aniversize configuration: ${AGENT_LABELS[agent]}\n`)
     } else {
-      console.log('No agent specified and no .aniversize/meta.json found — running identify…\n')
-      const result = await identify(projectRoot)
+      console.log('No agent specified and no .aniversize configuration found — running identify…\n')
+      const result = await identify(projectRoot, { dry, yes })
       if (!result.primary) {
         console.error(
           'Error: No AI coding agent configuration found in this project.\n' +
@@ -44,7 +39,6 @@ export async function unifyAction(agentArg?: string, opts: GlobalOpts = {}): Pro
         process.exit(1)
       }
       agent = result.primary
-      await writeIdentifyMeta(projectRoot, agent, { dry, yes })
       console.log(`Identified primary agent: ${AGENT_LABELS[agent]}\n`)
     }
   }

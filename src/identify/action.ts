@@ -1,5 +1,5 @@
 import path from 'path'
-import { identify, writeIdentifyMeta } from './model.js'
+import { identify } from './model.js'
 import { AGENT_LABELS } from './consts.js'
 import { resolveProjectRoot } from '../common/file-util.js'
 import type { AgentName } from './types.js'
@@ -11,7 +11,7 @@ export async function identifyAction(opts: GlobalOpts = {}): Promise<void> {
   if (dry) console.log('Dry run — no files will be written.\n')
   console.log(`Scanning ${projectRoot} for AI coding agent configurations...\n`)
 
-  const result = await identify(projectRoot)
+  const result = await identify(projectRoot, { dry, yes })
 
   if (result.primary === null) {
     console.log('No recognized AI coding agent configuration found.')
@@ -26,13 +26,14 @@ export async function identifyAction(opts: GlobalOpts = {}): Promise<void> {
   }
 
   console.log(`\nPrimary agent: ${result.primaryLabel}`)
-  const meta = await writeIdentifyMeta(projectRoot, result.primary, { dry, yes })
-  const relPath = path.relative(process.cwd(), meta.path)
-  if (dry) {
-    console.log(`Would write ${relPath}`)
-  } else if (meta.written) {
-    console.log(`Wrote ${relPath}`)
-  } else {
-    console.log(`Skipped ${relPath}`)
+  for (const file of [result.written!.meta, result.written!.mark]) {
+    const relPath = path.relative(process.cwd(), file.path)
+    if (dry) {
+      console.log(`Would write ${relPath}`)
+    } else if (file.written) {
+      console.log(`Wrote ${relPath}`)
+    } else {
+      console.log(`Skipped ${relPath}`)
+    }
   }
 }

@@ -1,7 +1,7 @@
 ---
+copilot: instruction
 applyTo: "src/**"
 ---
-
 # Context Path — Every Command and Function Accepts an Explicit Root
 
 All CLI action functions and any model/logic function that operates on project

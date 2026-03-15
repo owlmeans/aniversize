@@ -1,7 +1,7 @@
 ---
+copilot: instruction
 applyTo: "src/**"
 ---
-
 # File Operations with fs-extra
 
 Use `fs-extra` for all file system operations. It extends Node's `fs` with promises, `ensureDir`, `copy`, `outputFile`, and other conveniences.

@@ -1,10 +1,11 @@
 import { pathExists } from 'fs-extra'
 import { globby } from 'globby'
 import path from 'path'
-import type { AgentName, AgentScore, IdentifyResult, SignatureDef } from './types.js'
+import type { AgentName, AgentScore, IdentifyResult, SignatureDef, WriteIdentifyResult } from './types.js'
 import { AGENT_LABELS, IGNORE_PATTERNS, PRIORITY, SIGNATURES } from './consts.js'
 import { dryOutputFile } from '../common/file-util.js'
 import type { RunOpts } from '../common/types.js'
+import { writeMark } from '../mark/model.js'
 
 export function scoreForDepth(depth: number): number {
   if (depth === 0) return 100
@@ -71,7 +72,7 @@ export function pickPrimary(scores: AgentScore[]): AgentScore | null {
   return tied[0]
 }
 
-export async function identify(projectRoot: string): Promise<IdentifyResult> {
+export async function identify(projectRoot: string, opts: RunOpts = {}): Promise<IdentifyResult> {
   const scores = await Promise.all(
     SIGNATURES.map(sig => scoreAgent(sig, projectRoot))
   )
@@ -85,10 +86,13 @@ export async function identify(projectRoot: string): Promise<IdentifyResult> {
     }
   }
 
+  const written = primary ? await writeIdentifyMeta(projectRoot, primary.name, opts) : null
+
   return {
     primary: primary?.name ?? null,
     primaryLabel: primary ? AGENT_LABELS[primary.name] : null,
     signals,
+    written,
   }
 }
 
@@ -96,9 +100,13 @@ export async function writeIdentifyMeta(
   projectRoot: string,
   primary: AgentName,
   opts: RunOpts = {},
-): Promise<{ path: string; written: boolean }> {
+): Promise<WriteIdentifyResult> {
   const { dry = false, yes = false } = opts
   const metaPath = path.join(projectRoot, '.aniversize', 'meta.json')
-  const written = await dryOutputFile(metaPath, JSON.stringify({ primary }, null, 2) + '\n', dry, yes)
-  return { path: metaPath, written }
+  const metaWritten = await dryOutputFile(metaPath, JSON.stringify({ primary }, null, 2) + '\n', dry, yes)
+  const markResult = await writeMark(projectRoot, { primary }, opts)
+  return {
+    meta: { path: metaPath, written: metaWritten },
+    mark: { path: markResult.path, written: markResult.written },
+  }
 }

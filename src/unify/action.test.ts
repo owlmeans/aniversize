@@ -70,18 +70,20 @@ describe('unifyAction (agent from meta.json)', () => {
       )
       const { logs } = captureOutput()
       await unifyAction(undefined, { root })
-      expect(logs.some(l => l.includes('meta.json') && l.includes('Claude Code'))).toBe(true)
+      expect(logs.some(l => l.includes('.aniversize configuration') && l.includes('Claude Code'))).toBe(true)
     })
   )
 
-  test('prints error and exits when meta.json has invalid JSON', () =>
+  test('treats invalid meta.json as no config and falls through to identify', () =>
     withFixture('empty', async (root) => {
       await outputFile(path.join(root, '.aniversize', 'meta.json'), 'not json{')
       const { errors } = captureOutput()
       const exit = mockExit()
       await expect(unifyAction(undefined, { root })).rejects.toThrow()
       expect(exit.getCode()).toBe(1)
-      expect(errors.some(e => e.includes('invalid JSON'))).toBe(true)
+      // readMetaWithMark silently returns null for invalid JSON, so identify runs
+      // and finds no agent in an otherwise-empty project
+      expect(errors.some(e => e.includes('No AI coding agent configuration found'))).toBe(true)
     })
   )
 

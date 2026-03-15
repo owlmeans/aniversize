@@ -1,7 +1,7 @@
 ---
+copilot: instruction
 applyTo: "src/**"
 ---
-
 # Fixture-Based Test Pattern
 
 All tests that touch the file system either directly or indirectly **must** use

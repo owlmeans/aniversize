@@ -1,7 +1,7 @@
 ---
+copilot: instruction
 applyTo: "src/**"
 ---
-
 # Folder-module structure
 
 When a feature module grows beyond a single file, convert it into a **folder module** — a directory named after the feature containing split responsibility files plus an `index.ts` barrel.

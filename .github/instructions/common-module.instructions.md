@@ -1,7 +1,7 @@
 ---
+copilot: instruction
 applyTo: "src/**"
 ---
-
 # Common Module (`src/common/`)
 
 The `src/common/` folder is a **foundation module** — a shared, dependency-free layer consumed by all feature modules. It has no imports from other `src/` modules.

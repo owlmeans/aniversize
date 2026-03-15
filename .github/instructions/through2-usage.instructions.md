@@ -1,7 +1,7 @@
 ---
+copilot: instruction
 applyTo: "src/**"
 ---
-
 # Stream Processing with through2
 
 Use `through2` for building Node.js transform streams when processing file content or piping data between stages.

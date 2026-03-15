@@ -1,7 +1,7 @@
 ---
+copilot: instruction
 applyTo: "src/**"
 ---
-
 # File Discovery with globby
 
 Use `globby` for finding files by glob patterns. It is the primary tool for discovering `.aniversize/` files across a project tree.
